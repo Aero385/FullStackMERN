@@ -5,9 +5,14 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+
+import { deletePost, likePost } from '../../../actions/posts';
 
 
 const Post = ({post, setCurrentId}) => {
+
+  const dispatch = useDispatch();
 
   return (
     <Card className='card'>
@@ -26,19 +31,28 @@ const Post = ({post, setCurrentId}) => {
         </Button>
       </div>
       <div className='details'>
-        <Typography variant='body2' color='textSecondary'>{post.tags.map((tag) => `#${tag} `)}</Typography>
+      <Typography variant='body2' color='textSecondary'>
+        {Array.isArray(post.tags) &&
+          post.tags.map((tag) => (
+            <React.Fragment key={tag}>
+              {'#' + tag + ' '}
+            </React.Fragment>
+          ))
+        }
+      </Typography>
 
       </div>
+      <Typography className='title' variant='h5' gutterBottom>{post.title}</Typography>
       <CardContent>
-        <Typography className='title' variant='h5' gutterBottom>{post.message}</Typography>
+        <Typography className='message' variant='h5' gutterBottom>{post.message}</Typography>
       </CardContent>
       <CardActions className='cardActions'>
-        <Button size='small' color='primary' onClick={() => {}}>
+        <Button size='small' color='primary' onClick={() => dispatch(likePost(post._id))}>
           <FavoriteBorderIcon fontSize='small'/>
           Like
-          {/* {post.likeCount} */}
+          {post.likeCount}
         </Button>
-        <Button size='small' color='primary' onClick={() => {}}>
+        <Button size='small' color='primary' onClick={() => dispatch(deletePost(post._id))}>
           <DeleteIcon fontSize='small'/>
           Delete
         </Button>
