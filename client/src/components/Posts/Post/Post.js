@@ -44,12 +44,11 @@ const Post = ({post, setCurrentId}) => {
       </div>
       <Typography className='title' variant='h5' gutterBottom>{post.title}</Typography>
       <CardContent>
-        <Typography className='message' variant='h5' gutterBottom>{post.message}</Typography>
+        <Typography className='message' variant='body2' color='textSecondary' component='p' gutterBottom>{post.message}</Typography>
       </CardContent>
       <CardActions className='cardActions'>
         <Button size='small' color='primary' onClick={() => dispatch(likePost(post._id))}>
           <FavoriteBorderIcon fontSize='small'/>
-          Like
           {post.likeCount}
         </Button>
         <Button size='small' color='primary' onClick={() => dispatch(deletePost(post._id))}>
